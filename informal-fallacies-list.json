@@ -1,0 +1,203 @@
+[
+    {
+        "name":"ad baculum",
+        "description":"A threat; an illegitimate appeal to force",
+        "aliases":[
+            "faulty appeal to fear"
+        ],
+        "latin":true
+    },
+    {
+        "name":"ipse dixit",
+        "description":"Making an argument based off what an illegitimate source says",
+        "aliases":[
+            "appeal to the one"
+        ],
+        "latin":true
+    },
+    {
+        "name":"ad populum",
+        "description":"An imbalanced appeal to a majority",
+        "aliases":[
+            "appeal to the many",
+            "appeal to the majority"
+        ],
+        "latin":true
+    },
+    {
+        "name":"ad hominem",
+        "description":"Attacking a person instead of their argument",
+        "aliases":[],
+        "latin":true
+    },
+    {
+        "name":"bulverism",
+        "description":"Disregarding an argument based on how the arguer came to hold it",
+        "aliases":[
+            "genetic fallacy"
+        ],
+        "latin":false
+    },
+    {
+        "name":"tu quoque",
+        "description":"Dismissing an argument because of an arguer's behavioral consistency",
+        "aliases":[],
+        "latin":true
+    },
+    {
+        "name":"chronological snobbery",
+        "description":"Rejecting/affirming an idea based on how old or new it is",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"ad ignorantiam",
+        "description":"Arguing a position because there is no evidence against it",
+        "aliases":[
+            "appeal to ignorance"
+        ],
+        "latin":true
+    },
+    {
+        "name":"equivocation",
+        "description":"Changing the definition of a word in the middle of an argument",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"accent",
+        "description":"Incorrectly using emphasis",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"amphiboly",
+        "description":"Improperly using grammar",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"composition",
+        "description":"Transfering attributes of a part to the whole",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"division",
+        "description":"Transfering attributes of the whole to a part",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"circular reasoning",
+        "description":"Secretly assuming what you are trying to prove",
+        "aliases":[
+            "begging the question"
+        ],
+        "latin":false
+    },
+    {
+        "name":"post hoc ergo propter hoc",
+        "description":"Arguing that one event caused another based on the idea that one event happened first",
+        "aliases":[
+            "false cause"
+        ],
+        "latin":true
+    },
+    {
+        "name":"bifurcation",
+        "description":"Oversimplifying the choices of a question",
+        "aliases":[
+            "either/or",
+            "either-or",
+            "false dilemma"
+        ],
+        "latin":false
+    },
+    {
+        "name":"complex question",
+        "description":"Designing a question to eliminate possible legitimate responses",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"apriorism",
+        "description":"Looking at one case and applying the results to the whole",
+        "aliases":[
+            "hasty generalization"
+        ],
+        "latin":false
+    },
+    {
+        "name":"reification",
+        "description":"Giving conceptual abstractions concrete and personal characteristics",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"sweeping generalization",
+        "description":"Applying a legitimate generalization to a situation where it is no applicable",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"no true scotsman",
+        "description":"Attempting to protect a claim from counter-arguments by defining terms in a biased way",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"special pleading",
+        "description":"Applying a standard to your opponent that you don't apply to yourself",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"false analogy",
+        "description":"Comparing things with similarities that pose no relevance to the conclusion",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"slippery slope",
+        "description":"Arguing that one action will inevitably lead to an undesireable conclusion, while ignoring other factors that may prevent it",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"faulty appeal to pity",
+        "description":"Arguing a position on the basis of pity instead of logic",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"mob appeal",
+        "description":"Attempting to persuade people (usually a group) by using feelings instead of logic",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"irrelevant thesis",
+        "description":"Attempting to prove an irrelevant conclusion",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"straw man",
+        "description":"Misrepresenting your opponent's position, then arguing against the misrepresentation",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"elephant hurling",
+        "description":"Providing a long list of irreleveant information in an attempt to intimidate your opponent",
+        "aliases":[],
+        "latin":false
+    },
+    {
+        "name":"question-begging epithet",
+        "description":"Using biased and/or emotional language to support a conclusion that is logically unproved",
+        "aliases":[],
+        "latin":false
+    }
+]

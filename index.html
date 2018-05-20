@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Informal Fallacies - glassintel.com</title>
+
+        <style>
+            @import url(http://fonts.googleapis.com/css?family=Raleway:300);
+            #search-elements {
+                padding: 2.5px;
+            }
+            #search-bar {
+                background: rgb(238, 232, 232);
+                border: 2px rgb(147, 186, 201) solid;
+                border-radius: 3px;
+                margin: 10px;
+                padding: 2px;
+            }
+            #search-field {
+                border-radius: 10px;
+                width: 250px;
+                height: 30px;
+                font-family: 'Raleway';
+                font-size: 20px;
+                border: 2px rgba(147, 186, 201, 0.5) solid;
+            }
+            #search-img {
+                display: inline-block;
+                transform: translate(5px, 2px);
+                width: 20px;
+                height: 20px;
+            }
+            #list-container {
+                border: solid 2px rgb(147, 186, 201);
+                border-radius: 3px;
+                background: rgb(238, 232, 232);
+                padding: 5px;
+                padding-left: 10px;
+                
+            }
+            #fallacies-list {
+                text-align: left;
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                font-family: 'Raleway', sans-serif;
+                font-size: 20px;
+                line-height: 1.55;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div id="content" align="center">
+            <div id="search-bar">
+                <div id="search-elements">
+                    <input id="search-field" type="text" placeholder="Search...">
+                    <img id="search-img" src="../../../../images/search.png" alt="Search" title="Search" onmouseover="this.src = '../../../../images/search2.png'" onmouseout="this.src = '../../../../images/search.png'">
+                </div>
+            </div>
+            <div id="list-container">
+                <ul id="fallacies-list">
+
+                </ul>
+            </div>
+        </div>
+
+        <script>
+            var ifl; //import imformal fallacies json
+            var xobj = new XMLHttpRequest();
+            xobj.overrideMimeType("application/json");
+            xobj.open('GET', 'informal-fallacies-list.json', true); // Replace 'my_data' with the path to your file
+            xobj.onreadystatechange = function () {
+                if (xobj.readyState == 4 && xobj.status == "200") {
+                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                ifl = JSON.parse(xobj.responseText);
+                }
+            }
+            xobj.send(null);
+
+            document.addEventListener('keydown', 
+                function(evt) {
+                    if(evt.keyCode == 39) displayIFList();
+            });
+
+            function displayIFList() {
+                var list = document.getElementById('fallacies-list');
+
+                for(var i=0; i < ifl.length; i++) {
+                    var fal = ifl[i];
+                    var newlistitm = `
+                    <li>
+                    <b>${fal.name}</b> - ${fal.description}
+                    </li>
+                    `;
+                    list.innerHTML += newlistitm;
+                }
+            };
+
+            function searchFallacies(qry) {
+                /*
+                * goal: take the qry and compare it with the obj names
+                * in the ifl obj 
+                */
+                
+                var qrymatches = [];
+                var a = qry.trim().split(' ')[0];
+                for(var i=0; i < ifl.length; i++) {
+                    if(ifl[i].name.includes(a)) {
+                        qrymatches.push(ifl[i]);
+                    }
+                }
+            };
+            
+            
+        </script>
+    </body>
+</html>
