@@ -1,7 +1,12 @@
 [
     {
+        "release":"1.0.1",
+        "date":"5/20/2018",
+        "notes":"-Added a crude search function that gets the job done. Hopefull I can do more in the next few days"
+    },
+    {
         "release":"1.0",
         "date":"5/20/2018",
-        "notes":"-Initial build release"
+        "notes":"-Created github, uploaded intial code files<br>-This is the first 'stable' release of the program. The fallacy list can be viewed by pushing the right arrow key once the page has loaded. Added 30 base fallacies, view the json file. Search function does not work"
     }
 ]
