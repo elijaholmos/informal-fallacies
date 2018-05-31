@@ -1,0 +1,17 @@
+[
+    {
+        "code":200,
+        "head":"Can't display fallacy info",
+        "msg":"That fallacy is not in the database"
+    },
+    {
+        "code":201,
+        "head":"Unknown page status",
+        "msg":"That page status is not recognized"
+    },
+    {
+        "code":202,
+        "head":"Error returning to previous page",
+        "msg":"Unknown lastPage status"
+    }
+]

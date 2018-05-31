@@ -7,6 +7,9 @@
 
         <style>
             @import url(http://fonts.googleapis.com/css?family=Raleway:300);
+            .latin-true {
+                font-style: italic;
+            }
             #search-elements {
                 padding: 2.5px;
             }
@@ -21,7 +24,7 @@
                 border-radius: 10px;
                 width: 250px;
                 height: 30px;
-                font-family: 'Raleway';
+                font-family: 'Raleway', sans-serif;
                 font-size: 20px;
                 border: 2px rgba(147, 186, 201, 0.5) solid;
             }
@@ -31,6 +34,19 @@
                 width: 20px;
                 height: 20px;
             }
+            #return-img {
+                display: inline-block;
+                float: left;
+                transform: translate(0px, 6px);
+                width: 21px;
+                height: 21px;
+            }
+            #home-img {
+                display: inline-block;
+                transform: translate(-7px, 2px);
+                width: 22px;
+                height: 22px;
+            }
             #list-container {
                 border: solid 2px rgb(147, 186, 201);
                 border-radius: 3px;
@@ -38,13 +54,24 @@
                 padding: 5px;
                 padding-left: 10px;
                 
+                
             }
             #fallacies-list {
                 text-align: left;
                 list-style-type: none;
                 padding: 0;
                 margin: 0;
-                font-family: 'Raleway', sans-serif;
+                font-family: 'Raleway', calibri;
+                font-size: 20px;
+                line-height: 1.55;
+            }
+            #fallacies-list a {
+                text-decoration: none;
+                color: inherit;
+            }
+            #fallacy-info {
+                text-align: left;
+                font-family: 'Raleway', calibri;
                 font-size: 20px;
                 line-height: 1.55;
             }
@@ -55,20 +82,28 @@
         <div id="content" align="center">
             <div id="search-bar">
                 <div id="search-elements">
+                    <img id="return-img" src="../../../../images/return.png" alt="Return to Previous Page" title="Return to Previous Page" onclick="returnFunction()" onmouseover="this.src = '../../../../images/return2.png'" onmouseout="this.src = '../../../../images/return.png'">
+                    <img id="home-img" src="../../../../images/home-icon.png" alt="Home" title="Home" onclick="displayIFList()" onmouseover="this.src = '../../../../images/home-icon2.png'" onmouseout="this.src = '../../../../images/home-icon.png'">
                     <input id="search-field" type="text" placeholder="Search...">
-                    <img id="search-img" src="../../../../images/search.png" alt="Search" title="Search" onclick="searchFallacies(this.parentElement.firstElementChild.value)" onmouseover="this.src = '../../../../images/search2.png'" onmouseout="this.src = '../../../../images/search.png'">
+                    <img id="search-img" src="../../../../images/search.png" alt="Search" title="Search" onclick="searchFallacies(document.getElementById('search-field').value)" onmouseover="this.src = '../../../../images/search2.png'" onmouseout="this.src = '../../../../images/search.png'">
                 </div>
             </div>
             <div id="list-container">
-                <ul id="fallacies-list">
+                <ul id="fallacies-list" style="display:inherit">
 
                 </ul>
+                <div id="fallacy-info" style="display:none"></div>
             </div>
         </div>
 
         <script>
-            var ifl; //import imformal fallacies json
+            var ifl;    //imformal fallacies list
+            var errobj; //error list
+            var vh;     //version history
             var xobj = new XMLHttpRequest();
+            xobj2 = new XMLHttpRequest();
+            xobj3 = new XMLHttpRequest();
+
             xobj.overrideMimeType("application/json");
             xobj.open('GET', 'informal-fallacies-list.json', true); // Replace 'my_data' with the path to your file
             xobj.onreadystatechange = function () {
@@ -78,28 +113,97 @@
                 }
             }
             xobj.send(null);
+            xobj2.overrideMimeType("application/json");
+            xobj2.open('GET', 'errors.json', true); // Replace 'my_data' with the path to your file
+            xobj2.onreadystatechange = function () {
+                if (xobj2.readyState == 4 && xobj2.status == "200") {
+                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                errobj = JSON.parse(xobj2.responseText);
+                }
+            }
+            xobj2.send(null);
+            xobj3.overrideMimeType("application/json");
+            xobj3.open('GET', 'versionhistory.json', true); // Replace 'my_data' with the path to your file
+            xobj3.onreadystatechange = function () {
+                if (xobj3.readyState == 4 && xobj3.status == "200") {
+                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                vh = JSON.parse(xobj3.responseText);
+                }
+            }
+            xobj3.send(null);
+
+            var lastPage;
+            var pageStatus;
+
+            function updateNewPageStatus(newstatus) {
+                if(pageStatus) updateOldPageStatus(pageStatus); //take the current pageStatus and set to lastPage
+                switch(newstatus) { //new, update pageStatus with the actual current value
+                    case 'fal-list': return pageStatus = 'fal-list';
+                    case 'fal-info': return pageStatus = 'fal-info';
+                    case 'search-page': return pageStatus = 'search-page';
+
+                    default: console.log('unknown');
+                    
+                }
+            }
+            function updateOldPageStatus(oldstatus) {
+                switch(oldstatus) {
+                    case 'fal-list': return lastPage = 'fal-list';
+                    case 'fal-info': return lastPage = 'fal-info';
+                    case 'search-page': return lastPage = 'search-page';
+                    case 'logic': lastPage = 'logic';
+                    
+                    default: console.log('unknown');
+                }
+            }
+
+            var lastFal, lastQry;
+
+            const lastPageObj = {
+                "fal-list":function() {
+                    displayIFList();
+                },
+                "fal-info":function() {
+                    displayFallacyInfo(lastFal);
+                },
+                "search-page":function() {
+                    searchFallacies(lastQry);
+                },
+                "logic":function() {
+                    console.log('Cannot return to previous page');
+                }
+            };
+
 
             document.addEventListener('keydown', 
                 function(evt) {
-                    if(evt.keyCode == 39) displayIFList();
+            });
+            
+            document.getElementById('search-field').addEventListener('keydown', function(evt) { //enter function for search bar
+                if(evt.keyCode == 13 /*13 is ENTER*/) searchFallacies(document.getElementById('search-field').value);
             });
 
-            setTimeout(function() {
+            setTimeout(function() { //sometimes it takes a bit to complete the XML request.. this fixes that (for the most part)
                 displayIFList();
             }, 1);
 
             function displayIFList() {
                 var list = document.getElementById('fallacies-list');
+                var newHTML = "";
 
                 for(var i=0; i < ifl.length; i++) {
                     var fal = ifl[i];
                     var newlistitm = `
                     <li>
-                    <b>${fal.name}</b> - ${fal.description}
+                    <a href="javascript:void(0);" onclick="displayFallacyInfo('${fal.name}');"><b class="latin-${fal.latin}">${fal.name}</b></a> - ${fal.description}
                     </li>
                     `;
-                    list.innerHTML += newlistitm;
+                    newHTML += newlistitm;
                 }
+                list.innerHTML = newHTML; //replace whatever was in the fallacies-list element with the newHTML
+                displayFallacyListElement();
+                hideFallacyInfoElement();
+                updateNewPageStatus('fal-list');
             };
 
             function searchFallacies(qry) {
@@ -111,6 +215,7 @@
                 */
                 var qrymatches = [];
                 var a;
+                lastQry = qry; //set the lastQry val for returnFunction
 
                 if(qry.trim().split(' ').length > 1) {
                     a = qry.trim();
@@ -123,20 +228,99 @@
                 displaySearchResults(qrymatches);
             };
 
+            function changeFallacyListStatus() {
+                if(document.getElementById('fallacies-list').style.display == 'inherit') {
+                    document.getElementById('fallacies-list').style.display = 'none';
+                }
+                else {
+                    document.getElementById('fallacies-list').style.display = 'inherit';
+                }
+            }
+
+            function displayFallacyListElement() {
+                document.getElementById('fallacies-list').style.display = 'inherit';
+            }
+
+            function hideFallacyListElement() {
+                document.getElementById('fallacies-list').style.display = 'none';
+            }
+
+            function displayFallacyInfoElement() {
+                document.getElementById('fallacy-info').style.display = 'inherit';
+            }
+            
+            function hideFallacyInfoElement() {
+                document.getElementById('fallacy-info').style.display = 'none';
+            }
+
+            function changeFallacyInfoStatus() {
+                if(document.getElementById('fallacy-info').style.display == 'inherit') {
+                    document.getElementById('fallacy-info').style.display = 'none';
+                } else document.getElementById('fallacy-info').style.display = 'inherit';
+            }
+            
+
             function displaySearchResults(res) {
-                var newHTML;
-                newHTML = ``;
+                hideFallacyInfoElement();
+                displayFallacyListElement();
+                var newHTML = "";
                 for(var i=0; i < res.length; i++) {
                     newHTML += `
                     <li>
-                    <b>${res[i].name}</b> - ${res[i].description}
+                    <a href="javascript:void displayFallacyInfo('${res[i].name}');"><b class="latin-${res[i].latin}">${res[i].name}</b></a> - ${res[i].description}
                     </li>
                     `;
                 }
-                console.log(newHTML);
+                
+                updateNewPageStatus('search-page')
                 document.getElementById('fallacies-list').innerHTML = newHTML;
             }
-            
+
+            function displayFallacyInfo(fal) {
+                var a = 0;
+                var falobj;
+                for(var i=0; i < ifl.length; i++) { //check to make sure the fallacy is in database
+                    if(fal != ifl[i].name) a++;
+                }
+                if(a >= ifl.length) return new errorHandler(200);
+
+                //now, find the fallacy
+                for(var i=0; i < ifl.length; i++) {
+                    if(fal == ifl[i].name) {
+                        falobj = ifl[i]; //set the obj
+                        break;
+                    }
+                }
+
+                lastFal = falobj.name; //update the lastFal var for returnFunction purposes
+                
+                //set the base html with some stuff filled in
+                displayFallacyInfoElement();
+                hideFallacyListElement();
+                document.getElementById('fallacy-info').innerHTML = ` 
+                <b style="latin-${falobj.latin}">${falobj.name}</b> - <span style="fallacy description">${falobj.description}</span><br>
+                <b style="fallacy alias head">aliases - </b> <span id="fal-al-li" style="fallacy alias list"></span>
+                `; //I used "=" because I want to override what was previously set so that we don't have multiple fallacy infos
+
+                //now, we need to fill in the fallacy alias list
+                var aliaslist = "";
+                for(var i=0; i < falobj.aliases.length; i++) {
+                    if(i == falobj.aliases.length - 1) aliaslist += falobj.aliases[i];
+                    else aliaslist += falobj.aliases[i] +',';
+                }
+                if(aliaslist == "" || aliaslist == " ") aliaslist = "none";
+                document.getElementById('fal-al-li').innerText = aliaslist;
+                updateNewPageStatus('fal-info')
+            }
+
+            function returnFunction() {
+                if(lastPageObj[lastPage]) lastPageObj[lastPage]();
+                else new errorHandler(202);
+            }
+
+            function errorHandler(err) {
+                console.log(err);
+            }
             
         </script>
     </body>

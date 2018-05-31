@@ -1,8 +1,13 @@
 [
     {
+        "release":"1.1",
+        "date":"5/30/2018",
+        "notes":"-Added a function to (hopefully) ensure that the fallacies list always displays upon page load<br>-Alphabetized list of fallacies<br>-Greatly improved search function<br>-Added a return button that returns to the previous page<br>-Added a home button that displays the alphabetized list of fallacies<br>-Added the ability to click on a fallacy name and view its description and aliases<br>-Todo: live search function, search for aliases turn up results, bug hunting, and more"
+    },
+    {
         "release":"1.0.1",
         "date":"5/20/2018",
-        "notes":"-Added a crude search function that gets the job done. Hopefull I can do more in the next few days"
+        "notes":"-Added a crude search function that gets the job done. Hopefully I can do more in the next few days"
     },
     {
         "release":"1.0",
