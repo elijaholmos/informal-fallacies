@@ -183,11 +183,14 @@
                 if(evt.keyCode == 13 /*13 is ENTER*/) searchFallacies(document.getElementById('search-field').value);
             });
 
-            setTimeout(function() { //sometimes it takes a bit to complete the XML request.. this fixes that (for the most part)
-                displayIFList();
-            }, 1);
+            var pageLoad = setInterval(function(){
+                if(ifl) {
+                    displayIFList();
+                }
+            }, 100);
 
             function displayIFList() {
+                clearInterval(pageLoad); //even if it's already been cleared, we need to run it
                 var list = document.getElementById('fallacies-list');
                 var newHTML = "";
 

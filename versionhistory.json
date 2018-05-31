@@ -1,5 +1,10 @@
 [
     {
+        "release":"1.1.1",
+        "date":"5/30/2018",
+        "notes":"-Fixed that function that I added in 1.1 to 'ensure that the fallacies list always displays upon page load'... should be good now<br>-Added the images that I use for the home and return buttons"
+    },
+    {
         "release":"1.1",
         "date":"5/30/2018",
         "notes":"-Added a function to (hopefully) ensure that the fallacies list always displays upon page load<br>-Alphabetized list of fallacies<br>-Greatly improved search function<br>-Added a return button that returns to the previous page<br>-Added a home button that displays the alphabetized list of fallacies<br>-Added the ability to click on a fallacy name and view its description and aliases<br>-Todo: live search function, search for aliases turn up results, bug hunting, and more"
