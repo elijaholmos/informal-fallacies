@@ -1,5 +1,10 @@
 [
     {
+        "release":"1.2",
+        "date":"8/20/2018",
+        "notes":"-Added 'live search' function (search results update as you type)<br>-Did some small code cleanup (gotta keep it tidy)"
+    },
+    {
         "release":"1.1.1",
         "date":"5/30/2018",
         "notes":"-Fixed that function that I added in 1.1 to 'ensure that the fallacies list always displays upon page load'... should be good now<br>-Added the images that I use for the home and return buttons"

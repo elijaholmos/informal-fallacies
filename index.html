@@ -135,6 +135,12 @@
             var lastPage;
             var pageStatus;
 
+            //live search function:
+            document.getElementById('search-field').addEventListener('keydown', liveSearch);
+            function liveSearch(event) {
+                searchFallacies(document.getElementById('search-field').value);
+            }
+
             function updateNewPageStatus(newstatus) {
                 if(pageStatus) updateOldPageStatus(pageStatus); //take the current pageStatus and set to lastPage
                 switch(newstatus) { //new, update pageStatus with the actual current value
@@ -173,11 +179,6 @@
                     console.log('Cannot return to previous page');
                 }
             };
-
-
-            document.addEventListener('keydown', 
-                function(evt) {
-            });
             
             document.getElementById('search-field').addEventListener('keydown', function(evt) { //enter function for search bar
                 if(evt.keyCode == 13 /*13 is ENTER*/) searchFallacies(document.getElementById('search-field').value);
